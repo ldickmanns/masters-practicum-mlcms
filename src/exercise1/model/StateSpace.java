@@ -8,6 +8,6 @@ package exercise1.model;
  * O = Obstacle in cell
  * T = Target in cell
  */
-public enum EStateSpace {
+public enum StateSpace {
     E, P, O, T
 }
