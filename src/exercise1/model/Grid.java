@@ -1,6 +1,11 @@
 package exercise1.model;
 
-public class Grid {
+import exercise1.model.Notifications.Addition;
+import exercise1.model.Notifications.PedestrianMovement;
+
+import java.util.Observable;
+
+public class Grid extends Observable {
 
     /** {@link StateSpace} matrix representing the state state. */
     private StateSpace[][] state = null;
@@ -17,7 +22,7 @@ public class Grid {
 
     /** Creates a {@link Grid} from a {@link StateSpace} matrix. */
     public Grid(StateSpace[][] state) {
-        this.state = state;
+        this.state = state.clone();
     }
 
     /**
@@ -53,12 +58,42 @@ public class Grid {
         addObject(x, y, StateSpace.T);
     }
 
+    public void movePedestrian(int x, int y, Direction d) {
+        if (this.state[x][y] != StateSpace.P) return;
+        try {
+            int newX = x;
+            int newY = y;
+            switch (d) {
+                case UP:
+                    --newY;
+                    break;
+                case RIGHT:
+                    ++newX;
+                    break;
+                case DOWN:
+                    ++newY;
+                    break;
+                case LEFT:
+                    --newX;
+                    break;
+            }
+            this.state[newX][newY] = StateSpace.P;
+            this.state[x][y] = StateSpace.E;
+            setChanged();
+            notifyObservers(new PedestrianMovement(x, y, newX, newY));
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return;
+        }
+    }
+
     /** Internal helper to shorten the code. */
     private void addObject(int x, int y, StateSpace state) {
         if (x >= this.state.length || y >= this.state[0].length || this.state[x][y] != StateSpace.E){
             return;
         }
         this.state[x][y] = state;
+        setChanged();
+        notifyObservers(new Addition(x, y, state));
     }
 
     /** Returns the state. */
