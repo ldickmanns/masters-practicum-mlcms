@@ -1,7 +1,7 @@
 package exercise1.visualization;
 
 import exercise1.model.Grid;
-import exercise1.model.Direction;
+import exercise1.simulation.CostBasedStrategy;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
@@ -24,9 +24,12 @@ public class JavaFXVisualization extends Application {
 
         new Thread(() -> {
             try {
-                Thread.sleep(3000);
-                System.out.println("Moving!");
-                initialState.movePedestrian(5, 25, Direction.RIGHT);
+                CostBasedStrategy cbs = new CostBasedStrategy(initialState);
+                Thread.sleep(500);
+                for (int i = 0; i < 25; i++) {
+                    cbs.nextStep();
+                    Thread.sleep(500);
+                }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

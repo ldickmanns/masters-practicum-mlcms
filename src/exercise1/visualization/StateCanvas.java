@@ -4,7 +4,7 @@ import exercise1.model.Notifications.Addition;
 import exercise1.model.Notifications.Deletion;
 import exercise1.model.Notifications.Notification;
 import exercise1.model.Notifications.PedestrianMovement;
-import exercise1.model.StateSpace;
+import exercise1.model.CellStateObjects.StateSpace;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
