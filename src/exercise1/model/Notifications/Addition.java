@@ -1,6 +1,6 @@
 package exercise1.model.Notifications;
 
-import exercise1.model.StateSpace;
+import exercise1.model.CellStateObjects.StateSpace;
 
 public class Addition extends Notification {
     public StateSpace state;
