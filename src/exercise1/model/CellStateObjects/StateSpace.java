@@ -1,4 +1,6 @@
-package exercise1.model;
+package exercise1.model.CellStateObjects;
+
+import exercise1.model.Grid;
 
 /**
  * The state space for the {@link Grid}cells.
