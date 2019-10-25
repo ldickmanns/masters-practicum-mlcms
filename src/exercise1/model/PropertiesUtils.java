@@ -38,7 +38,7 @@ public class PropertiesUtils {
         return properties;
     }
 
-    public static StateSpace[][] fromProperties(Properties properties) {
+    public static Grid fromProperties(Properties properties) {
         String widthValue = properties.getProperty(WIDTH);
         String heightValue = properties.getProperty(HEIGHT);
         if (widthValue == null || heightValue == null || !isInt(widthValue) || !isInt(widthValue)) return null;
@@ -68,7 +68,7 @@ public class PropertiesUtils {
             }
         }
 
-        return grid.getState();
+        return grid;
     }
 
     public static Properties loadProperties() {
