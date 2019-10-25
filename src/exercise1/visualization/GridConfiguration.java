@@ -1,5 +1,6 @@
 package exercise1.visualization;
 
+import exercise1.Utils;
 import exercise1.model.CellStateObjects.StateSpace;
 import exercise1.model.Grid;
 import exercise1.simulation.CostBasedStrategy;
@@ -15,8 +16,8 @@ import javafx.scene.shape.Line;
 
 import java.util.function.BiConsumer;
 
-import static exercise1.visualization.VisualizationUtils.isTextFieldTextInt;
-import static exercise1.visualization.VisualizationUtils.predicateTextField;
+import static exercise1.Utils.isTextFieldTextInt;
+import static exercise1.Utils.predicateTextField;
 import static java.lang.Integer.parseInt;
 
 public class GridConfiguration {
@@ -59,7 +60,7 @@ public class GridConfiguration {
         hBox.setAlignment(Pos.CENTER_LEFT);
         Label stepsLabel = new Label("Steps:");
         stepsLabel.setPrefWidth(Q_WIDTH);
-        TextField stepsTF = predicateTextField(VisualizationUtils::isTextFieldTextInt);
+        TextField stepsTF = predicateTextField(Utils::isTextFieldTextInt);
         stepsTF.setPrefWidth(WIDTH - SPACING - Q_WIDTH);
         hBox.getChildren().addAll(stepsLabel, stepsTF);
         vBox.getChildren().add(hBox);
@@ -137,11 +138,11 @@ public class GridConfiguration {
         // x- and y-coordinate configuration
         Label xLabel = new Label("x:");
         xLabel.setPrefWidth(Q_WIDTH);
-        TextField xTF = predicateTextField(VisualizationUtils::isTextFieldTextInt);
+        TextField xTF = predicateTextField(Utils::isTextFieldTextInt);
         xTF.setPrefWidth(Q_WIDTH);
         Label yLabel = new Label("y:");
         yLabel.setPrefWidth(Q_WIDTH);
-        TextField yTF = predicateTextField(VisualizationUtils::isTextFieldTextInt);
+        TextField yTF = predicateTextField(Utils::isTextFieldTextInt);
         xTF.setPrefWidth(Q_WIDTH);
         gridPane.add(xLabel, 0, 1);
         gridPane.add(xTF, 1, 1);
@@ -151,11 +152,11 @@ public class GridConfiguration {
         // x- and y-span configuration
         Label xSpanLabel = new Label("x span:");
         xSpanLabel.setPrefWidth(Q_WIDTH);
-        TextField xSpanTF = predicateTextField(VisualizationUtils::isTextFieldTextInt);
+        TextField xSpanTF = predicateTextField(Utils::isTextFieldTextInt);
         xSpanTF.setPrefWidth(Q_WIDTH);
         Label ySpanLabel = new Label("y span:");
         ySpanLabel.setPrefWidth(Q_WIDTH);
-        TextField ySpanTF = predicateTextField(VisualizationUtils::isTextFieldTextInt);
+        TextField ySpanTF = predicateTextField(Utils::isTextFieldTextInt);
         ySpanTF.setPrefWidth(Q_WIDTH);
         gridPane.add(xSpanLabel, 0, 2);
         gridPane.add(xSpanTF, 1, 2);

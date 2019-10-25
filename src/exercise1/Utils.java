@@ -1,21 +1,28 @@
-package exercise1.visualization;
+package exercise1;
 
 import javafx.scene.control.TextField;
+import jdk.nashorn.internal.runtime.ECMAException;
 
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-public class VisualizationUtils {
+import static java.lang.Integer.parseInt;
+
+public class Utils {
 
     public static boolean isTextFieldTextInt(TextField textField) {
-        return isTextFieldTextType(textField, Integer::parseInt);
+        return isType(textField.getText(), Integer::parseInt);
     }
 
-    private static boolean isTextFieldTextType(TextField textField, Function<String, ?> parseFromString) {
+    public static boolean isInt(String s) {
+        return isType(s, Integer::parseInt);
+    }
+
+    private static boolean isType(String s, Function<String, ?> parseFromString) {
         try {
-            parseFromString.apply(textField.getText());
+            parseFromString.apply(s);
             return true;
-        } catch(Exception e) {
+        } catch (Exception e) {
             return false;
         }
     }
