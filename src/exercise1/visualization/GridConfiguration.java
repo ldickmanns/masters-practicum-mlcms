@@ -14,10 +14,12 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Line;
 
+import java.util.Properties;
 import java.util.function.BiConsumer;
 
 import static exercise1.Utils.isTextFieldTextInt;
 import static exercise1.Utils.predicateTextField;
+import static exercise1.model.PropertiesUtils.*;
 import static java.lang.Integer.parseInt;
 
 public class GridConfiguration {
@@ -30,7 +32,7 @@ public class GridConfiguration {
     private static final int SPACING = 10;
 
     private Grid grid;
-    private VBox content = new VBox(20);
+    private VBox content = new VBox(SPACING * 2);
 
     public GridConfiguration(Grid grid) {
         this.grid = grid;
@@ -47,6 +49,8 @@ public class GridConfiguration {
 
         content.getChildren().add(new Line(0, 0, WIDTH, 0));
         content.getChildren().add(new Line(0, 0, WIDTH, 0));
+
+        initPersistency();
     }
 
     private void initSimulationConfiguration() {
@@ -96,6 +100,35 @@ public class GridConfiguration {
         content.getChildren().add(addingGridPane(StateSpace.T));
         content.getChildren().add(new Line(0, 0, WIDTH, 0));
         content.getChildren().add(addingGridPane(StateSpace.E));
+    }
+    
+    private void initPersistency() {
+        GridPane gridPane = new GridPane();
+        ColumnConstraints cc = new ColumnConstraints(Q_WIDTH * 2 + SPACING);
+        gridPane.getColumnConstraints().addAll(cc, cc);
+        gridPane.setHgap(SPACING);
+        gridPane.setVgap(SPACING);
+        gridPane.setAlignment(Pos.CENTER);
+
+        Button save = new Button("Save");
+        save.setPrefWidth(Q_WIDTH * 2 + SPACING);
+        save.setOnAction(e -> {
+            Properties properties = toProperties(grid.getState());
+            saveProperties(properties);
+        });
+        gridPane.add(save, 0, 0);
+
+        Button load = new Button("Load");
+        load.setPrefWidth(Q_WIDTH * 2 + SPACING);
+        load.setOnAction(e -> {
+            Properties properties = loadProperties();
+            if (properties == null) return;
+            StateSpace[][] newState = fromProperties(properties);
+            if (newState == null) return;
+            grid.setState(newState);
+        });
+        gridPane.add(load, 1, 0);
+        content.getChildren().add(gridPane);
     }
 
     private GridPane addingGridPane(StateSpace type) {

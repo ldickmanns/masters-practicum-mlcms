@@ -1,12 +1,9 @@
 package exercise1;
 
 import javafx.scene.control.TextField;
-import jdk.nashorn.internal.runtime.ECMAException;
 
 import java.util.function.Function;
 import java.util.function.Predicate;
-
-import static java.lang.Integer.parseInt;
 
 public class Utils {
 

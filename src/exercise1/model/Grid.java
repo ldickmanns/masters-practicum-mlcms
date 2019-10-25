@@ -7,6 +7,7 @@ import exercise1.model.CellStateObjects.Target;
 import exercise1.model.Notifications.Addition;
 import exercise1.model.Notifications.Deletion;
 import exercise1.model.Notifications.PedestrianMovement;
+import exercise1.model.Notifications.Reset;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -145,6 +146,12 @@ public class Grid extends Observable {
     /** Returns the state. */
     public StateSpace[][] getState() {
         return state;
+    }
+
+    public void setState(StateSpace[][] state) {
+        this.state = state;
+        setChanged();
+        notifyObservers(new Reset(state));
     }
 
     public int getColumnCount() {

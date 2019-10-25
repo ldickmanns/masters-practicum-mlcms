@@ -1,9 +1,6 @@
 package exercise1.visualization;
 
-import exercise1.model.Notifications.Addition;
-import exercise1.model.Notifications.Deletion;
-import exercise1.model.Notifications.CoordinateNotification;
-import exercise1.model.Notifications.PedestrianMovement;
+import exercise1.model.Notifications.*;
 import exercise1.model.CellStateObjects.StateSpace;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -53,6 +50,15 @@ public class StateCanvas implements Observer {
                 colorCell(a.x, a.y, c);
                 return;
             }
+        }
+        if (arg instanceof Reset) {
+            Reset r = (Reset) arg;
+            StateSpace[][] state = r.state;
+            int width = PADDING + state.length * CELL_SIZE + PADDING;
+            int height = PADDING + state[0].length * CELL_SIZE + PADDING;
+            this.canvas.setWidth(width);
+            this.canvas.setHeight(height);
+            drawState(state);
         }
     }
 
