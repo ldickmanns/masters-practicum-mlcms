@@ -2,7 +2,7 @@ package exercise1.visualization;
 
 import exercise1.model.Notifications.Addition;
 import exercise1.model.Notifications.Deletion;
-import exercise1.model.Notifications.Notification;
+import exercise1.model.Notifications.CoordinateNotification;
 import exercise1.model.Notifications.PedestrianMovement;
 import exercise1.model.CellStateObjects.StateSpace;
 import javafx.scene.canvas.Canvas;
@@ -35,7 +35,7 @@ public class StateCanvas implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        if (arg instanceof Notification) {
+        if (arg instanceof CoordinateNotification) {
             if (arg instanceof PedestrianMovement) {
                 PedestrianMovement m = (PedestrianMovement) arg;
                 colorCell(m.x, m.y, E_COLOR);

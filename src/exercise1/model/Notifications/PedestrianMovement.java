@@ -1,6 +1,6 @@
 package exercise1.model.Notifications;
 
-public class PedestrianMovement extends Notification {
+public class PedestrianMovement extends CoordinateNotification {
 
     public int newX;
     public int newY;
