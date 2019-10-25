@@ -123,9 +123,9 @@ public class GridConfiguration {
         load.setOnAction(e -> {
             Properties properties = loadProperties();
             if (properties == null) return;
-            StateSpace[][] newState = fromProperties(properties);
-            if (newState == null) return;
-            grid.setState(newState);
+            Grid loadedGrid = fromProperties(properties);
+            if (loadedGrid == null) return;
+            grid.reset(loadedGrid);
         });
         gridPane.add(load, 1, 0);
         content.getChildren().add(gridPane);

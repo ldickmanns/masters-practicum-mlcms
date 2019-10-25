@@ -119,7 +119,6 @@ public class Grid extends Observable {
                 return;
             case P:
                 pedestrians = pedestrians.stream().filter(p -> p.x != x || p.y != y).collect(Collectors.toList());
-                // TODO you were here
                 break;
             case O:
                 obstacles = obstacles.stream().filter(o -> o.x != x || o.y != y).collect(Collectors.toList());
@@ -148,8 +147,12 @@ public class Grid extends Observable {
         return state;
     }
 
-    public void setState(StateSpace[][] state) {
-        this.state = state;
+    public void reset(Grid other) {
+        this.state = other.getState();
+        this.pedestrians = other.getPedestrians();
+        this.obstacles = other.getObstacles();
+        this.targets = other.getTargets();
+
         setChanged();
         notifyObservers(new Reset(state));
     }
