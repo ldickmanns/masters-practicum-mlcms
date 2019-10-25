@@ -5,11 +5,13 @@ import exercise1.model.CellStateObjects.Pedestrian;
 import exercise1.model.CellStateObjects.StateSpace;
 import exercise1.model.CellStateObjects.Target;
 import exercise1.model.Notifications.Addition;
+import exercise1.model.Notifications.Deletion;
 import exercise1.model.Notifications.PedestrianMovement;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
+import java.util.stream.Collectors;
 
 public class Grid extends Observable {
 
@@ -72,6 +74,7 @@ public class Grid extends Observable {
     }
 
     public void movePedestrian(int x, int y, Direction d) {
+        if (!inGrid(x, y)) return;
         if (this.state[x][y] != StateSpace.P) return;
         try {
             int newX = x;
@@ -108,11 +111,32 @@ public class Grid extends Observable {
         }
     }
 
+    public void emptyCell(int x, int y) {
+        if (!inGrid(x, y)) return;
+        switch (this.state[x][y]) {
+            case E:
+                return;
+            case P:
+                pedestrians = pedestrians.stream().filter(p -> p.x != x || p.y != y).collect(Collectors.toList());
+                // TODO you were here
+                break;
+            case O:
+                obstacles = obstacles.stream().filter(o -> o.x != x || o.y != y).collect(Collectors.toList());
+                break;
+            case T:
+                targets = targets.stream().filter(t -> t.x != x || t.y != y).collect(Collectors.toList());
+                break;
+        }
+        this.state[x][y] = StateSpace.E;
+        setChanged();
+        notifyObservers(new Deletion(x, y));
+    }
+
     /** Internal helper to shorten the code. */
     private void addObject(int x, int y, StateSpace state) {
-        if (x >= this.state.length || y >= this.state[0].length || this.state[x][y] != StateSpace.E){
-            return;
-        }
+        if (!inGrid(x, y)) return;
+        if (this.state[x][y] != StateSpace.E) return;
+
         this.state[x][y] = state;
         setChanged();
         notifyObservers(new Addition(x, y, state));
@@ -131,6 +155,12 @@ public class Grid extends Observable {
     public int getRowCount() {
         if (this.state == null || this.state[0] == null) return 0;
         return this.state[0].length;
+    }
+
+    public boolean inGrid(int x, int y) {
+        if (state == null || state[0] == null) return false;
+        if (x >= 0 && x < state.length && y >= 0 && y < state[0].length) return true;
+        return false;
     }
 
     public List<Pedestrian> getPedestrians() {

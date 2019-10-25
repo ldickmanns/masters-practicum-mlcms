@@ -42,11 +42,10 @@ public class GridConfiguration {
         content.getChildren().add(new Line(0, 0, WIDTH, 0));
         content.getChildren().add(new Line(0, 0, WIDTH, 0));
 
-        content.getChildren().add(addingGridPane(StateSpace.P));
+        initAdding();
+
         content.getChildren().add(new Line(0, 0, WIDTH, 0));
-        content.getChildren().add(addingGridPane(StateSpace.O));
         content.getChildren().add(new Line(0, 0, WIDTH, 0));
-        content.getChildren().add(addingGridPane(StateSpace.T));
     }
 
     private void initSimulationConfiguration() {
@@ -88,6 +87,16 @@ public class GridConfiguration {
         content.getChildren().add(vBox);
     }
 
+    private void initAdding() {
+        content.getChildren().add(addingGridPane(StateSpace.P));
+        content.getChildren().add(new Line(0, 0, WIDTH, 0));
+        content.getChildren().add(addingGridPane(StateSpace.O));
+        content.getChildren().add(new Line(0, 0, WIDTH, 0));
+        content.getChildren().add(addingGridPane(StateSpace.T));
+        content.getChildren().add(new Line(0, 0, WIDTH, 0));
+        content.getChildren().add(addingGridPane(StateSpace.E));
+    }
+
     private GridPane addingGridPane(StateSpace type) {
         // Name and creation function.
         String name;
@@ -104,6 +113,10 @@ public class GridConfiguration {
             case T:
                 name = "Target";
                 creation = (x, y) -> grid.addTarget(x, y);
+                break;
+            case E:
+                name = "Deletion";
+                creation = (x, y) -> grid.emptyCell(x, y);
                 break;
             default:
                 return null;
@@ -150,7 +163,8 @@ public class GridConfiguration {
         gridPane.add(ySpanTF, 3, 2);
 
         // Button.
-        Button button = new Button("Add " + name);
+        String prefix = type != StateSpace.E ? "Add " : "";
+        Button button = new Button(prefix + name);
         button.setPrefWidth(WIDTH);
         button.setOnAction(e -> {
             if (!isTextFieldTextInt(xTF) || !isTextFieldTextInt(yTF)) return;
