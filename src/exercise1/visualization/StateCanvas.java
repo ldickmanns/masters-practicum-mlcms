@@ -1,9 +1,6 @@
 package exercise1.visualization;
 
-import exercise1.model.Notifications.Addition;
-import exercise1.model.Notifications.Deletion;
-import exercise1.model.Notifications.Notification;
-import exercise1.model.Notifications.PedestrianMovement;
+import exercise1.model.Notifications.*;
 import exercise1.model.CellStateObjects.StateSpace;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -16,7 +13,7 @@ public class StateCanvas implements Observer {
 
     private static final int LINE_WIDTH = 2;
     private static final int CELL_SIZE = 20;
-    private static final int PADDING = 20;
+    private static final int PADDING = 1;
     private static final Color E_COLOR = Color.WHITE;
     private static final Color P_COLOR = Color.RED;
     private static final Color O_COLOR = Color.BLUE;
@@ -35,7 +32,7 @@ public class StateCanvas implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        if (arg instanceof Notification) {
+        if (arg instanceof CoordinateNotification) {
             if (arg instanceof PedestrianMovement) {
                 PedestrianMovement m = (PedestrianMovement) arg;
                 colorCell(m.x, m.y, E_COLOR);
@@ -53,6 +50,15 @@ public class StateCanvas implements Observer {
                 colorCell(a.x, a.y, c);
                 return;
             }
+        }
+        if (arg instanceof Reset) {
+            Reset r = (Reset) arg;
+            StateSpace[][] state = r.state;
+            int width = PADDING + state.length * CELL_SIZE + PADDING;
+            int height = PADDING + state[0].length * CELL_SIZE + PADDING;
+            this.canvas.setWidth(width);
+            this.canvas.setHeight(height);
+            drawState(state);
         }
     }
 
