@@ -102,9 +102,9 @@ public class CostBasedStrategy {
     
 
     private void addObstacleCost() {
-    	List<Pedestrian> pedestrians = grid.getPedestrians();
-    	for (Pedestrian p : pedestrians){
-			costMatrix[p.x][p.y] += Double.MAX_VALUE;
+    	List<Obstacle> obstacles = grid.getObstacles();
+    	for (Obstacle o : obstacles){
+			costMatrix[o.x][o.y] += Double.MAX_VALUE;
     	}
     }
 
