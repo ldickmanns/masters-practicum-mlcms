@@ -80,7 +80,7 @@ public class GridConfiguration {
                     Thread.sleep(500);
                     for (int i = 0; i < amount; i++) {
                         cbs.nextStep();
-                        Thread.sleep(500);
+                        Thread.sleep(100);
                     }
                 } catch (InterruptedException ie) {
                     ie.printStackTrace();

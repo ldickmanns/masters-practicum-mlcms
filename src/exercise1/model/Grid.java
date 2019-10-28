@@ -49,6 +49,20 @@ public class Grid extends Observable {
         addObject(x, y, StateSpace.P);
         this.pedestrians.add(new Pedestrian(x, y));
     }
+    
+    /**
+     * Add a pedestrian into the cell at the specified coordinates.
+     * The pedestrian is only added to the cell if the coordinates are inside the state and the cell is empty.
+     *
+     * @param x the x-coordinate
+     * @param y the y-coordinate
+     */
+    public void addPedestrianWithSpeed(int x, int y, int speed) {
+        addObject(x, y, StateSpace.P);
+        Pedestrian p = new Pedestrian(x, y);
+        p.speed = speed;
+        this.pedestrians.add(p);
+    }
 
     /**
      * Add a obstacle into the cell at the specified coordinates.

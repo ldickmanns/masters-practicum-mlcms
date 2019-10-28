@@ -118,6 +118,8 @@ public class CostBasedStrategy {
     /** Performs one step of the simulation. */
     public void nextStep() {
         grid.getPedestrians().forEach(p -> {
+        	if (p.count>=p.speed){
+        	p.count = 0;
             // Check dynamic cost matrix for the next move
         	double up = costMatrix[p.x][p.y - 1];
         	double right = costMatrix[p.x + 1][p.y];
@@ -151,6 +153,9 @@ public class CostBasedStrategy {
 	                break;
 	        }
             updateCostMatrix();
+        	} else {
+        		p.count += 100;
+        	}
         });
     }
 }
