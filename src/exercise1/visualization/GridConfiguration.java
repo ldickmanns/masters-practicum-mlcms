@@ -3,7 +3,8 @@ package exercise1.visualization;
 import exercise1.Utils;
 import exercise1.model.CellStateObjects.StateSpace;
 import exercise1.model.Grid;
-import exercise1.simulation.CostBasedStrategy;
+import exercise1.simulation.CostCalculation;
+import exercise1.simulation.DijkstraDistanceCalculationStrategy;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -76,10 +77,11 @@ public class GridConfiguration {
             int amount = parseInt(stepsTF.getText());
             new Thread(() -> {
                 try {
-                    CostBasedStrategy cbs = new CostBasedStrategy(grid);
+                    //CostBasedStrategy cbs = new CostBasedStrategy(grid);
+                    CostCalculation cc = new CostCalculation(grid, new DijkstraDistanceCalculationStrategy());
                     Thread.sleep(500);
                     for (int i = 0; i < amount; i++) {
-                        cbs.nextStep();
+                        cc.nextStep();
                         Thread.sleep(500);
                     }
                 } catch (InterruptedException ie) {
