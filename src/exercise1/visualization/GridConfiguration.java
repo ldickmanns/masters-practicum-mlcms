@@ -77,7 +77,6 @@ public class GridConfiguration {
             int amount = parseInt(stepsTF.getText());
             new Thread(() -> {
                 try {
-                    //CostBasedStrategy cbs = new CostBasedStrategy(grid);
                     CostCalculation cc = new CostCalculation(grid, new DijkstraDistanceCalculationStrategy());
                     Thread.sleep(500);
                     for (int i = 0; i < amount; i++) {

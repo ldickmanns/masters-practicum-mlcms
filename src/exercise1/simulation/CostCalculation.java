@@ -6,6 +6,7 @@ import exercise1.model.Direction;
 import exercise1.model.Grid;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -16,16 +17,22 @@ public class CostCalculation {
     private double[][] costMatrix;
     private Grid grid;
     private IDistanceCalculationStrategy dcs;
+    private List<Pedestrian> pedestrians = new ArrayList<>();
 
     public CostCalculation(Grid grid, IDistanceCalculationStrategy dcs) {
         this.costMatrix = new double[grid.getColumnCount()][grid.getRowCount()];
         this.grid = grid;
         this.dcs = dcs;
+        // The state is read in from left to right. Therefore, pedestrians are also added from left to right
+        // when loading a scenario. But as for most scenarios pedestrians move from left to right, it makes
+        // sense to start with moving the rightmost pedestrians.
+        this.pedestrians.addAll(grid.getPedestrians());
+        Collections.reverse(this.pedestrians);
         updateCostMatrix();
     }
 
     public void nextStep() {
-        grid.getPedestrians().forEach(p -> {
+        pedestrians.forEach(p -> {
             // Check dynamic cost matrix for the next move
             double up = costMatrix[p.x][p.y - 1];
             double right = costMatrix[p.x + 1][p.y];
