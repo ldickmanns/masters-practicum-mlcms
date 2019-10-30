@@ -1,6 +1,7 @@
 package exercise1.visualization;
 
 import exercise1.Utils;
+import exercise1.model.CellStateObjects.Pedestrian;
 import exercise1.model.CellStateObjects.StateSpace;
 import exercise1.model.Grid;
 import exercise1.simulation.CostCalculation;
@@ -15,6 +16,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Line;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 import java.util.function.BiConsumer;
 
@@ -75,22 +78,147 @@ public class GridConfiguration {
         button.setOnAction(e -> {
             if (!isTextFieldTextInt(stepsTF)) return;
             int amount = parseInt(stepsTF.getText());
+
             new Thread(() -> {
                 try {
                     CostCalculation cc = new CostCalculation(grid, new DijkstraDistanceCalculationStrategy());
                     Thread.sleep(500);
+
+                    // 180 steps * 0.33 sec/step = 60 sec (measuring time)
+                    int sAmount = 180;
+                    double sSpeedSum450 = 0.0;
+                    double sSpeedSum500 = 0.0;
+
                     for (int i = 0; i < amount; i++) {
+                        System.out.println("Step: " + i);
+                        System.out.println("Last Pedestrian x: " + grid.getPedestrians().get(grid.getPedestrians().size() - 1).x);
+                        // Store positions before step.
+                        List<Pedestrian> pedestriansBefore450 = pedestriansAt450mMeasuringPoint();
+                        List<Pedestrian> pedestriansBefore500 = pedestriansAt500mMeasuringPoints();
+
+                        // Perform next step.
                         cc.nextStep();
-                        Thread.sleep(500);
+
+                        // Store positions after step.
+                        List<Pedestrian> pedestriansAfter450 = pedestriansAt450mMeasuringPoint();
+                        List<Pedestrian> pedestriansAfter500 = pedestriansAt500mMeasuringPoints();
+
+
+                        // 30 steps * 0.33 sec/step = 10 sec (transient response)
+                        if (i >= 30) {
+                            int pAmount450 = 0;
+                            int pAmount500 = 0;
+                            double pSpeedSum450 = 0.0;
+                            double pSpeedSum500 = 0.0;
+
+                            for (Pedestrian p : pedestriansAfter450) {
+                                if (pedestriansBefore450.contains(p)) {
+                                    pAmount450++;
+                                    Pedestrian pBefore450 = pedestriansBefore450.get(pedestriansBefore450.indexOf(p));
+                                    Pedestrian pAfter450 = pedestriansAfter450.get(pedestriansAfter450.indexOf(p));
+                                    // One step is performed in 0.33 seconds
+                                    // 0.33 sec * 0.4m = 1.2 m/s
+                                    if (pBefore450.x != pAfter450.x || pBefore450.y != pAfter450.y) pSpeedSum450 += 1.2;
+                                }
+                            }
+
+                            for (Pedestrian p : pedestriansAfter500) {
+                                if (pedestriansBefore500.contains(p)) {
+                                    pAmount500++;
+                                    Pedestrian pBefore500 = pedestriansBefore500.get(pedestriansBefore500.indexOf(p));
+                                    Pedestrian pAfter500 = pedestriansAfter500.get(pedestriansAfter500.indexOf(p));
+                                    // One step is performed in 0.33 seconds
+                                    // 0.33 sec * 0.4m = 1.2 m/s
+                                    if (pBefore500.x != pAfter500.x || pBefore500.y != pAfter500.y) pSpeedSum500 += 1.2;
+                                }
+                            }
+
+
+                            if (i >= 30 + sAmount) {
+                                System.out.println("Average Speed 450: " + (sSpeedSum450 / sAmount));
+                                System.out.println("Average Speed 450: " + (sSpeedSum500 / sAmount));
+                            } else {
+                                if (pAmount450 > 0) sSpeedSum450 += (pSpeedSum450 / pAmount450);
+                                if (pAmount500 > 0) sSpeedSum500 += (pSpeedSum500 / pAmount500);
+                                System.out.println("Current Speed 450: " + (pSpeedSum450 / pAmount450));
+                                System.out.println("Current Speed 500: " + (pSpeedSum500 / pAmount500));
+                            }
+                        }
+                        System.out.println();
+                        System.out.println();
+                        //Thread.sleep(333);
                     }
                 } catch (InterruptedException ie) {
                     ie.printStackTrace();
                 }
             }).start();
         });
+
         vBox.getChildren().add(button);
 
         content.getChildren().add(vBox);
+    }
+
+    private List<Pedestrian> pedestriansAt500mMeasuringPoints() {
+        List<Pedestrian> pedestriansInArea = new ArrayList<>();
+
+        StateSpace[][] state = grid.getState();
+
+        for (int x = 1249; x < 1254; x++) {
+            // Above measuring points.
+            for (int y = 6; y < 16; y++) {
+                if (state[x][y] == StateSpace.P) {
+                    for (Pedestrian p : grid.getPedestrians()) {
+                        if (p.x == x && p.y == y) {
+                            pedestriansInArea.add(p.copy());
+                        }
+                    }
+                }
+            }
+            // Below measuring points.
+            for (int y = 26; y < 31; y++) {
+                if (state[x][y] == StateSpace.P) {
+                    for (Pedestrian p : grid.getPedestrians()) {
+                        if (p.x == x && p.y == y) {
+                            pedestriansInArea.add(p.copy());
+                        }
+                    }
+                }
+            }
+        }
+
+        return pedestriansInArea;
+    }
+
+    private List<Pedestrian> pedestriansAt450mMeasuringPoint() {
+        List<Pedestrian> pedestriansInArea = new ArrayList<>();
+
+        StateSpace[][] state = grid.getState();
+
+        for (int x = 1124; x < 1129; x++) {
+            // Above measuring points.
+            for (int y = 6; y < 16; y++) {
+                if (state[x][y] == StateSpace.P) {
+                    for (Pedestrian p : grid.getPedestrians()) {
+                        if (p.x == x && p.y == y) {
+                            pedestriansInArea.add(p.copy());
+                        }
+                    }
+                }
+            }
+            // Below measuring points.
+            for (int y = 21; y < 31; y++) {
+                if (state[x][y] == StateSpace.P) {
+                    for (Pedestrian p : grid.getPedestrians()) {
+                        if (p.x == x && p.y == y) {
+                            pedestriansInArea.add(p.copy());
+                        }
+                    }
+                }
+            }
+        }
+
+        return pedestriansInArea;
     }
 
     private void initAdding() {

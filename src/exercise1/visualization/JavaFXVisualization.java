@@ -22,10 +22,11 @@ public class JavaFXVisualization extends Application {
 
         GridConfiguration gridConfiguration = new GridConfiguration(grid);
 
-        ScrollPane scrollPane = new ScrollPane(stateCanvas.getCanvas());
+        //ScrollPane scrollPane = new ScrollPane(stateCanvas.getCanvas());
 //        scrollPane.setPrefViewportWidth(1000);
 
-        HBox root = new HBox(20, scrollPane, gridConfiguration.getContent());
+        //HBox root = new HBox(20, scrollPane, gridConfiguration.getContent());
+        HBox root = new HBox(20, gridConfiguration.getContent());
         root.setPadding(new Insets(20));
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
