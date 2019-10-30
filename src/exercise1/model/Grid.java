@@ -47,7 +47,7 @@ public class Grid extends Observable {
      */
     public void addPedestrian(int x, int y) {
         addObject(x, y, StateSpace.P);
-        this.pedestrians.add(new Pedestrian(x, y));
+        this.pedestrians.add(new Pedestrian(x, y, this.pedestrians.size()));
     }
 
     /**
