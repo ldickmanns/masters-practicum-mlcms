@@ -11,8 +11,8 @@ import java.util.Observer;
 
 public class StateCanvas implements Observer {
 
-    private static final int LINE_WIDTH = 2;
-    private static final int CELL_SIZE = 20;
+    private static final int LINE_WIDTH = 1;
+    private static final int CELL_SIZE = 5;
     private static final int PADDING = 1;
     private static final Color E_COLOR = Color.WHITE;
     private static final Color P_COLOR = Color.RED;
