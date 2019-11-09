@@ -1,5 +1,5 @@
 {
-  "name" : "chicken",
+  "name" : "Straight_line_gnm",
   "description" : "",
   "release" : "1.0",
   "processWriters" : {
@@ -7,14 +7,6 @@
       "type" : "org.vadere.simulator.projects.dataprocessing.outputfile.TimestepPedestrianIdOutputFile",
       "filename" : "postvis.trajectories",
       "processors" : [ 1, 2 ]
-    }, {
-      "type" : "org.vadere.simulator.projects.dataprocessing.outputfile.TimestepPedestrianIdOverlapOutputFile",
-      "filename" : "overlaps.csv",
-      "processors" : [ 3 ]
-    }, {
-      "type" : "org.vadere.simulator.projects.dataprocessing.outputfile.NoDataKeyOutputFile",
-      "filename" : "overlapCount.txt",
-      "processors" : [ 4 ]
     } ],
     "processors" : [ {
       "type" : "org.vadere.simulator.projects.dataprocessing.processor.PedestrianPositionProcessor",
@@ -37,38 +29,26 @@
     "isWriteMetaData" : false
   },
   "scenario" : {
-    "mainModel" : "org.vadere.simulator.models.osm.OptimalStepsModel",
+    "mainModel" : "org.vadere.simulator.models.gnm.GradientNavigationModel",
     "attributesModel" : {
-      "org.vadere.state.attributes.models.AttributesOSM" : {
-        "stepCircleResolution" : 4,
-        "numberOfCircles" : 1,
-        "optimizationType" : "NELDER_MEAD",
-        "varyStepDirection" : true,
-        "movementType" : "ARBITRARY",
-        "stepLengthIntercept" : 0.4625,
-        "stepLengthSlopeSpeed" : 0.2345,
-        "stepLengthSD" : 0.036,
-        "movementThreshold" : 0.0,
-        "minStepLength" : 0.1,
-        "minimumStepLength" : true,
-        "maxStepDuration" : 1.7976931348623157E308,
-        "dynamicStepLength" : true,
-        "updateType" : "EVENT_DRIVEN",
-        "seeSmallWalls" : false,
+      "org.vadere.state.attributes.models.AttributesGNM" : {
+        "attributesODEIntegrator" : {
+          "solverType" : "DORMAND_PRINCE_45",
+          "stepSizeMin" : 1.0E-4,
+          "stepSizeMax" : 1.0,
+          "toleranceAbsolute" : 1.0E-5,
+          "toleranceRelative" : 1.0E-4
+        },
+        "floorGradientProviderType" : "FLOOR_EIKONAL_DISCRETE",
         "targetPotentialModel" : "org.vadere.simulator.models.potential.fields.PotentialFieldTargetGrid",
-        "pedestrianPotentialModel" : "org.vadere.simulator.models.potential.PotentialFieldPedestrianCompactSoftshell",
-        "obstaclePotentialModel" : "org.vadere.simulator.models.potential.PotentialFieldObstacleCompactSoftshell",
-        "submodels" : [ ]
+        "pedestrianPotentialModel" : "org.vadere.simulator.models.gnm.PotentialFieldPedestrianGNM",
+        "obstaclePotentialModel" : "org.vadere.simulator.models.gnm.PotentialFieldObstacleGNM"
       },
-      "org.vadere.state.attributes.models.AttributesPotentialCompactSoftshell" : {
-        "pedPotentialIntimateSpaceWidth" : 0.45,
-        "pedPotentialPersonalSpaceWidth" : 1.2,
-        "pedPotentialHeight" : 50.0,
-        "obstPotentialWidth" : 0.8,
-        "obstPotentialHeight" : 6.0,
-        "intimateSpaceFactor" : 1.2,
-        "personalSpacePower" : 1,
-        "intimateSpacePower" : 1
+      "org.vadere.state.attributes.models.AttributesPotentialGNM" : {
+        "pedestrianBodyPotential" : 2.72,
+        "pedestrianRecognitionDistance" : 0.8,
+        "obstacleBodyPotential" : 20.1,
+        "obstacleRepulsionStrength" : 0.25
       },
       "org.vadere.state.attributes.models.AttributesFloorField" : {
         "createMethod" : "HIGH_ACCURACY_FAST_MARCHING",
@@ -99,7 +79,7 @@
       "printFPS" : false,
       "digitsPerCoordinate" : 2,
       "useFixedSeed" : true,
-      "fixedSeed" : -6740150775035950762,
+      "fixedSeed" : -3349647102068073333,
       "simulationSeed" : 0,
       "useSalientBehavior" : false
     },
@@ -114,47 +94,17 @@
         "boundingBoxWidth" : 0.5,
         "bounded" : true
       },
-      "obstacles" : [ {
-        "shape" : {
-          "type" : "POLYGON",
-          "points" : [ {
-            "x" : 20.0,
-            "y" : 20.0
-          }, {
-            "x" : 31.0,
-            "y" : 20.0
-          }, {
-            "x" : 31.0,
-            "y" : 31.0
-          }, {
-            "x" : 20.0,
-            "y" : 31.0
-          }, {
-            "x" : 20.0,
-            "y" : 30.0
-          }, {
-            "x" : 30.0,
-            "y" : 30.0
-          }, {
-            "x" : 30.0,
-            "y" : 21.0
-          }, {
-            "x" : 20.0,
-            "y" : 21.0
-          } ]
-        },
-        "id" : -1
-      } ],
+      "obstacles" : [ ],
       "measurementAreas" : [ ],
       "stairs" : [ ],
       "targets" : [ {
         "id" : 1,
         "absorbing" : true,
         "shape" : {
-          "x" : 40.0,
-          "y" : 25.0,
-          "width" : 1.0,
-          "height" : 1.0,
+          "x" : 45.0,
+          "y" : 24.0,
+          "width" : 2.0,
+          "height" : 4.0,
           "type" : "RECTANGLE"
         },
         "waitingTime" : 0.0,
