@@ -33,7 +33,7 @@
         "backSteps" : 1
       }
     } ],
-    "isTimestamped" : true,
+    "isTimestamped" : false,
     "isWriteMetaData" : false
   },
   "scenario" : {
