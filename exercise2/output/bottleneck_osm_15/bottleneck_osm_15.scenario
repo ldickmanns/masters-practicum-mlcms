@@ -1,7 +1,8 @@
 {
-  "name" : "bottleneck_osm",
+  "name" : "bottleneck_osm_15",
   "description" : "",
   "release" : "1.0",
+  "commithash" : "8c70caee933026d48c0d8e0f1dc23bcb2ed66a4c",
   "processWriters" : {
     "files" : [ {
       "type" : "org.vadere.simulator.projects.dataprocessing.outputfile.TimestepPedestrianIdOutputFile",
@@ -33,7 +34,7 @@
         "backSteps" : 1
       }
     } ],
-    "isTimestamped" : true,
+    "isTimestamped" : false,
     "isWriteMetaData" : false
   },
   "scenario" : {
@@ -100,7 +101,7 @@
       "digitsPerCoordinate" : 2,
       "useFixedSeed" : true,
       "fixedSeed" : 9165579847689926989,
-      "simulationSeed" : 0,
+      "simulationSeed" : 9165579847689926989,
       "useSalientBehavior" : false
     },
     "topography" : {
@@ -165,7 +166,7 @@
         },
         "interSpawnTimeDistribution" : "org.vadere.state.scenario.ConstantDistribution",
         "distributionParameters" : [ 1.0 ],
-        "spawnNumber" : 25,
+        "spawnNumber" : 15,
         "maxSpawnNumberTotal" : -1,
         "startTime" : 0.0,
         "endTime" : 0.0,
