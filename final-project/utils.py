@@ -18,7 +18,7 @@ def plot_phase_portrait(ds, param, model, area):
     trajectory2 = []
     y1 = [area, -area]
     y2 = [area, -area]
-    for i in range(10000):
+    for i in range(20000):
         trajectory1.append(y1)
         y1 = euler(ds, param, 0.001, y1)
         trajectory2.append(y2)
