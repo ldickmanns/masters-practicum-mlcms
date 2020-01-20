@@ -33,7 +33,7 @@ def roessler_attractor(x, y, z, a):
 
 
 def vec_roessler_attractor(x, a):
-    x = x[0]
-    y = x[1]
-    z = x[2]
-    return np.array(roessler_attractor(x, y, z, a))
+    x1 = x[0]
+    x2 = x[1]
+    x3 = x[2]
+    return np.array(roessler_attractor(x1, x2, x3, a))
