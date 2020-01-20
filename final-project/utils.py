@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import torch
 import numpy as np
+from scipy.integrate import solve_ivp
 
 from torch.utils.data import DataLoader
 from torch.utils.data.sampler import SubsetRandomSampler
@@ -31,6 +32,23 @@ def plot_phase_portrait(ds, param, model, area):
     ax.plot(trajectory1[0], trajectory1[1])
     ax.plot(trajectory2[0], trajectory2[1])
     ax.set_title('Alpha: ' + str(param))
+    plt.show()
+    return
+
+def plot_3d_trajectory(ds, param, model, x0):
+    trajectory = []
+    y = x0
+    for i in range(20000):
+        trajectory.append(y)
+        y = model(torch.FloatTensor(y).unsqueeze(0), torch.FloatTensor([param]).unsqueeze(0)).tolist()[0]
+    trajectory = np.asarray(trajectory).T
+    tspan = (0., 200.)
+    teval = np.arange(tspan[0], tspan[1], 0.01)
+    sol = solve_ivp(lambda t, x: ds(x, param), tspan, x0, t_eval=teval)
+    fig = plt.figure(figsize=(10, 10))
+    ax = fig.add_subplot(111, projection='3d')
+    ax.plot(sol.y[0], sol.y[1], sol.y[2], lw=0.1)
+    ax.plot(trajectory[0], trajectory[1], trajectory[2], lw=0.1)
     plt.show()
     return
 
