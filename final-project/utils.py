@@ -2,6 +2,9 @@ import matplotlib.pyplot as plt
 import torch
 import numpy as np
 
+from torch.utils.data import DataLoader
+from torch.utils.data.sampler import SubsetRandomSampler
+
 
 def euler(ds, alpha, delta, y):
     u, v = ds(y[0], y[1], alpha)
@@ -30,3 +33,23 @@ def plot_phase_portrait(ds, param, model, area):
     ax.set_title('Alpha: ' + str(param))
     plt.show()
     return
+
+
+def train_valid_loader(dataset, bs=100, validation_split=0.2):
+    random_seed = 42
+    dataset_size = len(dataset)
+    indices = list(range(dataset_size))
+    split = int(np.floor(validation_split * dataset_size))
+
+    np.random.seed(random_seed)
+    np.random.shuffle(indices)
+
+    train_indices, val_indices = indices[split:], indices[:split]
+
+    train_sampler = SubsetRandomSampler(train_indices)
+    valid_sampler = SubsetRandomSampler(val_indices)
+
+    train_loader = DataLoader(dataset, batch_size=bs, sampler=train_sampler)
+    valid_loader = DataLoader(dataset, batch_size=bs, sampler=valid_sampler)
+
+    return train_loader, valid_loader
