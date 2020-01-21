@@ -79,7 +79,7 @@ class RK4N(nn.Module):
             f = self.hidden_layers[name](torch.relu(f))
 
         # Output.
-        f = self.output(torch.relu(f))
+        f = self.h * self.output(torch.relu(f))
         return f
 
 
