@@ -28,7 +28,7 @@ def vec_andronov_hopf(x, a):
 def roessler_attractor(x, y, z, a):
     dx = -y - z
     dy = x + a * y
-    dz = 2 + z * (x - 4)
+    dz = 0.2 + z * (x - 14.)
     return dx, dy, dz
 
 

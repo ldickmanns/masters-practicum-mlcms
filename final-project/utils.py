@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import torch
 import numpy as np
+from mpl_toolkits.mplot3d import Axes3D
 from scipy.integrate import solve_ivp
 
 from torch.utils.data import DataLoader
@@ -33,6 +34,7 @@ def plot_phase_portrait(ds, param, model, area, x0):
     plt.show()
     return
 
+
 def plot_3d_trajectory(ds, param, model, x0):
     trajectory = []
     y = x0
@@ -40,8 +42,8 @@ def plot_3d_trajectory(ds, param, model, x0):
         trajectory.append(y)
         y = model(torch.FloatTensor(y).unsqueeze(0), torch.FloatTensor([param]).unsqueeze(0)).tolist()[0]
     trajectory = np.asarray(trajectory).T
-    tspan = (0., 200.)
-    teval = np.arange(tspan[0], tspan[1], 0.01)
+    tspan = (0., 1000.)
+    teval = np.arange(tspan[0], tspan[1], 0.02)
     sol = solve_ivp(lambda t, x: ds(x, param), tspan, x0, t_eval=teval)
     fig = plt.figure(figsize=(10, 10))
     ax = fig.add_subplot(111, projection='3d')
