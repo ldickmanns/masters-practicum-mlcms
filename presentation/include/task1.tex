@@ -1,11 +1,45 @@
 \section{TASK 1, Summary of the paper contents}
 
 \begin{frame}
-	\frametitle{Sub-tasks}
+	\frametitle{Summary}
+	\begin{itemize}
+		\item Approximation of nonlinear dynamical systems with NNs
+		\item Continuous-time models (i.e. sets of ODEs)
+		\item Black-Box-Approach
+		\begin{itemize}
+			\item[$\Rightarrow$] No information on the approximated system
+			\item[$\Rightarrow$] The \textbf{entire} system is approximated
+		\end{itemize}
+		\item Gray-Box-Approach
+		\begin{itemize}
+			\item[$\Rightarrow$] Some information on the approximated system
+			\item[$\Rightarrow$] Only \textbf{unknown} parts of are approximated
+		\end{itemize}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Questions}
 	\begin{enumerate}
 		\item Which integration rule did they use in the paper?
+		\begin{itemize}
+			\item[$\Rightarrow$] Trapezodial Rule.\vspace{1mm}
+			\item[$\Rightarrow$] ODE: $\dot{\overrightarrow{X}} = F(\overrightarrow{X}; \overrightarrow{p})$\vspace{1mm}
+			\item[$\Rightarrow$] Rule: $\overrightarrow{X}_{n+1} = \overrightarrow{X}_n + \frac{h}{2}[F(\overrightarrow{X}_n; \overrightarrow{p}) + F(\overrightarrow{X}_{n+1}; \overrightarrow{p})]$
+		\end{itemize}
 		\item How did they design the neural network?
+		\begin{itemize}
+			\item[$\Rightarrow$] RNN due to implicit integration rule
+			\item[$\Rightarrow$] Two hidden layers with six neurons
+			\item[$\Rightarrow$] Sigmodal activation functions
+		\end{itemize}
 		\item What is the dynamic system the used as an illustrative example?
+		\begin{itemize}
+			\item[$\Rightarrow$] Reactor with a irreversible reaction on a catalytic surface
+		\end{itemize}
 		\item What are the results?
+		\begin{itemize}
+			\item[$\Rightarrow$] Good approximations with Gray-Box-Approach
+		\end{itemize}
 	\end{enumerate}
 \end{frame}
