@@ -48,7 +48,7 @@ def plot_3d_trajectory(ds, param, model, x0):
     fig = plt.figure(figsize=(10, 10))
     ax = fig.add_subplot(111, projection='3d')
     ax.plot(sol.y[0], sol.y[1], sol.y[2], lw=0.1)
-    ax.plot(trajectory[0], trajectory[1], trajectory[2], lw=0.1)
+    ax.plot(trajectory[0], trajectory[1], trajectory[2], lw=0.5)
     plt.show()
     return
 
@@ -71,3 +71,46 @@ def train_valid_loader(dataset, bs=100, validation_split=0.2):
     valid_loader = DataLoader(dataset, batch_size=bs, sampler=valid_sampler)
 
     return train_loader, valid_loader
+
+
+def extract_min_max(ds, params, model, x0, axis=0):
+    mins_model = []
+    maxs_model = []
+    mins_true = []
+    maxs_true = []
+    for param in params:
+        trajectory = []
+        y = x0
+        for i in range(20000):
+            trajectory.append(y)
+            y = model(torch.FloatTensor(y).unsqueeze(0), torch.FloatTensor([param]).unsqueeze(0)).tolist()[0]
+
+        trajectory = np.asarray(trajectory).T
+        tspan = (0., 200.)
+        teval = np.arange(tspan[0], tspan[1], 0.01)
+        sol = solve_ivp(lambda t, x: ds(x, param), tspan, x0, t_eval=teval)
+        mins_model.append(np.min(trajectory[axis][1800:]))
+        maxs_model.append(np.max(trajectory[axis][1800:]))
+        mins_true.append(np.min(sol.y[axis][1800:]))
+        maxs_true.append(np.max(sol.y[axis][1800:]))
+        print(param)
+
+    true_min_max = {'mins': mins_true, 'maxs': maxs_true}
+    model_min_max = {'mins': mins_model, 'maxs': maxs_model}
+
+    return true_min_max, model_min_max
+
+
+def plot_bifurcation(min_max, params, true_sys=True, axis='x'):
+    mins_true = min_max['mins']
+    maxs_true = min_max['maxs']
+    plt.figure(figsize=(5,5))
+    plt.plot(params, mins_true, 'bo', linestyle='-')
+    plt.plot(params, maxs_true, 'ro', linestyle='-', mfc='none', markersize=15)
+    title = 'True System' if true_sys else 'Approximated System'
+    plt.title(title)
+    plt.legend(['max(' + axis + ')', 'min(' + axis + ')'])
+    plt.xlabel("a", fontsize=14)
+    plt.ylabel(axis, fontsize=14)
+    plt.show()
+    return
