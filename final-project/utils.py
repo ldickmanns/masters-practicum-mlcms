@@ -109,7 +109,7 @@ def plot_bifurcation(min_max, params, true_sys=True, axis='x'):
     plt.plot(params, maxs_true, 'ro', linestyle='-', mfc='none', markersize=15)
     title = 'True System' if true_sys else 'Approximated System'
     plt.title(title)
-    plt.legend(['max(' + axis + ')', 'min(' + axis + ')'])
+    plt.legend(['min(' + axis + ')', 'max(' + axis + ')'])
     plt.xlabel("a", fontsize=14)
     plt.ylabel(axis, fontsize=14)
     plt.show()
