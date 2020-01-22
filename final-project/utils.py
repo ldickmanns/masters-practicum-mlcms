@@ -35,7 +35,7 @@ def plot_phase_portrait(ds, param, model, area, x0):
     return
 
 
-def plot_3d_trajectory(ds, param, model, x0):
+def plot_3d_trajectory(ds, param, model, x0, lw=0.1):
     trajectory = []
     y = x0
     for i in range(20000):
@@ -47,8 +47,8 @@ def plot_3d_trajectory(ds, param, model, x0):
     sol = solve_ivp(lambda t, x: ds(x, param), tspan, x0, t_eval=teval)
     fig = plt.figure(figsize=(10, 10))
     ax = fig.add_subplot(111, projection='3d')
-    ax.plot(sol.y[0], sol.y[1], sol.y[2], lw=0.1)
-    ax.plot(trajectory[0], trajectory[1], trajectory[2], lw=0.5)
+    ax.plot(sol.y[0], sol.y[1], sol.y[2], lw=lw)
+    ax.plot(trajectory[0], trajectory[1], trajectory[2], lw=lw)
     plt.show()
     return
 
@@ -93,7 +93,6 @@ def extract_min_max(ds, params, model, x0, axis=0):
         maxs_model.append(np.max(trajectory[axis][1800:]))
         mins_true.append(np.min(sol.y[axis][1800:]))
         maxs_true.append(np.max(sol.y[axis][1800:]))
-        print(param)
 
     true_min_max = {'mins': mins_true, 'maxs': maxs_true}
     model_min_max = {'mins': mins_model, 'maxs': maxs_model}
