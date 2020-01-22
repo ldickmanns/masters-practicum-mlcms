@@ -2,16 +2,76 @@
 
 \begin{frame}
 	\frametitle{Euler's Method}
+	\paragraph{Formula:}\vspace{-1mm}
+	\quad\quad $y_{n+1} = y_n + h f(t_k,y_k)$
+	\vspace{5mm}
+	
+	\paragraph{Properties:}\vspace{-2mm}
 	\begin{itemize}
+		\item Black-Box-Approach
 		\item Explicit numerical integration
-		\item No RNN required like in the paper
+		\begin{itemize}
+			\item[$\Rightarrow$] No RNN required
+		\end{itemize}
 	\end{itemize}
-	\paragraph{Formula}
-	\begin{align}
-		y_{n+1} = y_n + hf(t_k,y_k)\nonumber
-	\end{align}
 \end{frame}
 
+%\begin{frame}
+%	\frametitle{Network configuration}
+%	\paragraph{Linear system:}
+%	\begin{itemize}
+%		\item Input: 2-dimensional vector
+%		\item Parameters: 1 (fixed)
+%		\item Hidden layers: 2
+%		\item Neurons per hidden layer: 20
+%		\item Output: 2-dimensional vector
+%		\item Loss: Mean squared error
+%		\item Optimization: SGD
+%	\end{itemize}
+%	\paragraph{Andronov-Hopf system:}
+%	\begin{itemize}
+%		\item Input: 2-dimensional vector
+%		\item Parameters: 1
+%		\item Hidden layers: 3
+%		\item Neurons per hidden layer: 100
+%		\item Output: 2-dimensional vector
+%		\item Loss: Mean squared error
+%		\item Optimization: Adam
+%	\end{itemize}
+%\end{frame}
+%
+%\begin{frame}
+%	\frametitle{Network configuration}
+%	\paragraph{R\"ossler attractor:}
+%	\begin{itemize}
+%		\item Input: 3-dimensional vector
+%		\item Parameters: 1
+%		\item Hidden layers: 3
+%		\item Neurons per hidden layer: 200
+%		\item Output: 3-dimensional vector
+%		\item Loss: Mean squared error
+%		\item Optimization: Adam
+%	\end{itemize}
+%\end{frame}
+
 \begin{frame}
-	\frametitle{Network architecture}
+	\frametitle{Network configuration}
+	\centering
+	\begin{tabular} { c | c | c | c}
+						& Linear System & Andronov-Hopf & R\"ossler attractor	\\
+		\hline
+		Input			& 2 		& 2			& 3			\\
+		\hline
+		Parameters		& 0 		& 1			& 1			\\
+		\hline
+		Hidden layers	& 2			& 3			& 3			\\
+		\hline
+		Neurons / layer	& 20		& 100		& 200		\\
+		\hline
+		Output			& 2			& 2			& 2			\\
+		\hline
+		Loss function	& MSE		& MSE		& MSE		\\
+		\hline
+		Optimization	& SGD		& Adam		& Adam		\\
+	\end{tabular}
 \end{frame}
