@@ -4,7 +4,7 @@
 	\frametitle{Euler's Method}
 	\paragraph{Formula:}\vspace{-1mm}
 	\quad\quad $y_{n+1} = y_n + h \cdot \dot{y}_n$
-	\vspace{5mm}
+	\vspace{1mm}
 	
 	\paragraph{Properties:}\vspace{-2mm}
 	\begin{itemize}
@@ -14,45 +14,13 @@
 			\item[$\Rightarrow$] No RNN required
 		\end{itemize}
 	\end{itemize}
+	
+	\paragraph{Architecture}\vspace{2mm}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=.5\linewidth]{figures/euler/net_architecture}
+	\end{figure}
 \end{frame}
-
-%\begin{frame}
-%	\frametitle{Network configuration}
-%	\paragraph{Linear system:}
-%	\begin{itemize}
-%		\item Input: 2-dimensional vector
-%		\item Parameters: 1 (fixed)
-%		\item Hidden layers: 2
-%		\item Neurons per hidden layer: 20
-%		\item Output: 2-dimensional vector
-%		\item Loss: Mean squared error
-%		\item Optimization: SGD
-%	\end{itemize}
-%	\paragraph{Andronov-Hopf system:}
-%	\begin{itemize}
-%		\item Input: 2-dimensional vector
-%		\item Parameters: 1
-%		\item Hidden layers: 3
-%		\item Neurons per hidden layer: 100
-%		\item Output: 2-dimensional vector
-%		\item Loss: Mean squared error
-%		\item Optimization: Adam
-%	\end{itemize}
-%\end{frame}
-%
-%\begin{frame}
-%	\frametitle{Network configuration}
-%	\paragraph{R\"ossler attractor:}
-%	\begin{itemize}
-%		\item Input: 3-dimensional vector
-%		\item Parameters: 1
-%		\item Hidden layers: 3
-%		\item Neurons per hidden layer: 200
-%		\item Output: 3-dimensional vector
-%		\item Loss: Mean squared error
-%		\item Optimization: Adam
-%	\end{itemize}
-%\end{frame}
 
 \begin{frame}
 	\frametitle{Network configuration}
