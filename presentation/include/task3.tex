@@ -6,7 +6,7 @@
 	\quad\quad $y_{n+1} = y_n + h \cdot \sum_{i=1}^s b_i k_i$
 	
 	\quad\quad $k_i = f \Bigg( t_n + c_i h, y_n + h \cdot \sum_{j=1}^{i-1} a_{ij} k_j\Bigg)$
-	\vspace{5mm}
+	\vspace{1mm}
 	
 	\paragraph{Properties:}\vspace{-2mm}
 	\begin{itemize}
@@ -16,6 +16,12 @@
 			\item[$\Rightarrow$] No RNN required
 		\end{itemize}
 	\end{itemize}
+	
+	\paragraph{Architecture}\vspace{2mm}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=.7\linewidth]{figures/runge_kutta/net_architecture}
+	\end{figure}
 \end{frame}
 
 \begin{frame}
