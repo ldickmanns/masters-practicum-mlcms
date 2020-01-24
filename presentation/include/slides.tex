@@ -1,0 +1,41 @@
+\usepackage[utf8]{inputenc}
+\usepackage{packages}
+\usepackage{beamermods}
+
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{url}
+\usepackage{algorithm2e}
+\usepackage{svg}
+\usepackage{amsmath}
+
+\usepackage{subfig}
+
+
+\author[L. Dickmanns, M. Sellami]{Ludwig Dickmanns, Mahdi Sellami}
+\title[Learning Dynamical Systems with NNs]{Learning Dynamical Systems from Data: Neural Networks.}
+
+\advisor{Felix Dietrich}
+
+
+\newdate{date}{23}{01}{2020}
+\date{\displaydate{date}}
+
+
+\usepackage{pgfpages}
+\usepackage{ifthen}
+% ============================================================================
+% jobname solution
+% ============================================================================
+\newif\ifsolution%
+\ifthenelse{\equal{\detokenize{notes}}{\jobname}}{%
+\setbeameroption{show notes on second screen=bottom}
+\setbeamercolor{note page}{bg=white, fg=black}
+\setbeamercolor{note title}{bg=white!95!black, fg=black}
+}{
+}
+
+% TeXLive 2018 compatibility: https://tex.stackexchange.com/questions/426088/texlive-pretest-2018-beamer-and-subfig-collide
+\makeatletter
+\let\@@magyar@captionfix\relax
+\makeatother
